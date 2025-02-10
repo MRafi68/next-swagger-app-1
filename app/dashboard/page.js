@@ -1,6 +1,6 @@
 "use client";
 
-import { Layout, Button } from "antd";
+import { Layout, Button, Spin } from "antd";
 import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import ItemTable from "../components/ItemTable";
@@ -11,6 +11,7 @@ const { Content } = Layout;
 
 const DashboardPage = () => {
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
   const [selectedItem, setSelectedItem] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isDeleteVisible, setIsDeleteVisible] = useState(false);
@@ -30,6 +31,8 @@ const DashboardPage = () => {
         }
       } catch (error) {
         console.error("Error fetching items:", error);
+      } finally {
+        setLoading(false); // Set loading to false when fetching is complete
       }
     };
 
@@ -116,6 +119,14 @@ const DashboardPage = () => {
     setIsFormVisible(false);
     setSelectedItem(null);
   };
+
+  if (loading) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <Spin size="large" />
+      </div>
+    );
+  }
 
   return (
     <Layout style={{ minHeight: "100vh" }}>

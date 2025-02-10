@@ -29,7 +29,7 @@ const itemForm = ({ visible, onSubmit, onCancel, initialValues }) => {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="description" label="Description">
+        <Form.Item name="description" label="Description" rules={[{ required: true, message: "Description is required" }]}>
           <Input.TextArea />
         </Form.Item>
         <Form.Item>
