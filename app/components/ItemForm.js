@@ -3,14 +3,21 @@
 import { Form, Input, Button, Modal } from "antd";
 import { useEffect } from "react";
 
-const itemForm = ({ visible, onSubmit, onCancel, initialValues }) => {
+const ItemForm = ({ visible, onSubmit, onCancel, initialValues }) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (initialValues) {
-      form.setFieldValue(initialValues);
-    } else {
-      form.resetFields();
+    if (visible) {
+      if (initialValues) {
+        form.setFields(
+          Object.entries(initialValues).map(([name, value]) => ({
+            name,
+            value,
+          }))
+        );
+      } else {
+        form.resetFields();
+      }
     }
   }, [initialValues, visible]);
 
@@ -29,7 +36,11 @@ const itemForm = ({ visible, onSubmit, onCancel, initialValues }) => {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="description" label="Description" rules={[{ required: true, message: "Description is required" }]}>
+        <Form.Item
+          name="description"
+          label="Description"
+          rules={[{ required: true, message: "Description is required" }]}
+        >
           <Input.TextArea />
         </Form.Item>
         <Form.Item>
@@ -42,4 +53,4 @@ const itemForm = ({ visible, onSubmit, onCancel, initialValues }) => {
   );
 };
 
-export default itemForm;
+export default ItemForm;
